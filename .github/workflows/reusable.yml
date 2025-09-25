@@ -1,23 +1,28 @@
-name: Reusable Workflow
+name: "Repo B — Reusable Workflow"
+
 on:
-  workflow_call:  
+  workflow_call:
     inputs:
       message:
+        description: "Message from caller"
         required: true
         type: string
     secrets:
-      TOKEN:
+      REPO_B_PAT:
         required: true
 
 jobs:
-  say-hello:
+  do-stuff:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo-b
+      - name: Checkout repo B
         uses: actions/checkout@v4
 
-      - name: Print input
-        run: echo "Message from caller: ${{ inputs.message }}"
+      - name: Print message from caller
+        run: |
+          echo "Message from caller: ${{ inputs.message }}"
 
-      - name: Show token length
-        run: echo "Token length: ${#${{ secrets.TOKEN }}}"
+      - name: Confirm secret present and show its length
+        run: |
+          # Use -n to avoid newline count; wc -c prints bytes
+          echo -n "${{ secrets.REPO_B_PAT }}" | wc -c
