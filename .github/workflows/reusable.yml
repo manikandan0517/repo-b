@@ -8,21 +8,15 @@ on:
         required: true
         type: string
     secrets:
-      REPO_B_PAT:
+      REPO_B_PAT:   # 👈 exact name
         required: true
 
 jobs:
   do-stuff:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo B
-        uses: actions/checkout@v4
-
       - name: Print message from caller
-        run: |
-          echo "Message from caller: ${{ inputs.message }}"
+        run: echo "Message: ${{ inputs.message }}"
 
-      - name: Confirm secret present and show its length
-        run: |
-          # Use -n to avoid newline count; wc -c prints bytes
-          echo -n "${{ secrets.REPO_B_PAT }}" | wc -c
+      - name: Check secret length
+        run: echo -n "${{ secrets.REPO_B_PAT }}" | wc -c
