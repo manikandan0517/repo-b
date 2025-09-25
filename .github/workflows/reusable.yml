@@ -1,6 +1,6 @@
 name: Reusable Workflow
 on:
-  workflow_call:   # 👈 makes it callable
+  workflow_call:  
     inputs:
       message:
         required: true
