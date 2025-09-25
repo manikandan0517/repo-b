@@ -1,0 +1,23 @@
+name: Reusable Workflow
+on:
+  workflow_call:   # 👈 makes it callable
+    inputs:
+      message:
+        required: true
+        type: string
+    secrets:
+      TOKEN:
+        required: true
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo-b
+        uses: actions/checkout@v4
+
+      - name: Print input
+        run: echo "Message from caller: ${{ inputs.message }}"
+
+      - name: Show token length
+        run: echo "Token length: ${#${{ secrets.TOKEN }}}"
